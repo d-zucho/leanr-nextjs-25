@@ -1,5 +1,7 @@
+import { Skeleton } from '@/components/ui/skeleton'
+
 const LoadingDashboard = () => {
-  return <p> LoadingDashboard</p>
+  return <Skeleton className='w-full h-[400px]' />
 }
 
 export default LoadingDashboard
