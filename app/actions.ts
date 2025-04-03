@@ -3,6 +3,7 @@
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { prisma } from './utils/db'
 import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 
 export async function handleSubmission(formData: FormData) {
   const { getUser } = getKindeServerSession()
@@ -14,18 +15,19 @@ export async function handleSubmission(formData: FormData) {
 
   const title = formData.get('title')
   const content = formData.get('content')
-  const imageUrl = formData.get('imageUrl')
+  const url = formData.get('url')
 
-  const data = await prisma.blogPost.create({
+  await prisma.blogPost.create({
     data: {
       title: title as string,
       content: content as string,
-      imageUrl: imageUrl as string,
+      imageUrl: url as string,
       authorId: user.id,
       authorImage: user.picture as string,
       authorName: user.given_name as string,
     },
   })
 
+  revalidatePath('/')
   return redirect('/dashboard')
 }
