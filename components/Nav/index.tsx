@@ -7,7 +7,6 @@ import {
   LogoutLink,
 } from '@kinde-oss/kinde-auth-nextjs/components'
 import { cn } from '@/lib/utils'
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 
 const Navbar = () => {
