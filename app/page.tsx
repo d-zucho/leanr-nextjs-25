@@ -3,6 +3,7 @@ import { prisma } from './utils/db'
 import { Suspense } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 
+export const revalidate = 120 // revalidate every 2 minutes
 async function getData() {
   // delay for 2 seconds
   await new Promise((resolve) => setTimeout(resolve, 2000))
