@@ -1,11 +1,11 @@
 import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import Link from 'next/link'
 import { prisma } from '../utils/db'
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import BlogPostCard from '@/components/BlogPostCard'
 
-const getData = async (userId: string) => {
+async function getData(userId: string) {
+  await new Promise((resolve) => setTimeout(resolve, 2000))
   const data = await prisma.blogPost.findMany({
     where: {
       authorId: userId,
@@ -18,17 +18,18 @@ const getData = async (userId: string) => {
   return data
 }
 
-const DashboardPage = async () => {
+export default async function DashboardRoute() {
   const { getUser } = getKindeServerSession()
   const user = await getUser()
 
-  const data = await getData(user.id)
+  const data = await getData(user?.id)
 
   return (
     <div>
       <div className='flex items-center justify-between mb-4'>
         <h2 className='text-xl font-medium'>Your Blog Articles</h2>
-        <Link href='/dashboard/create' className={cn(buttonVariants())}>
+
+        <Link className={buttonVariants()} href='/dashboard/create'>
           Create Post
         </Link>
       </div>
@@ -41,5 +42,3 @@ const DashboardPage = async () => {
     </div>
   )
 }
-
-export default DashboardPage
